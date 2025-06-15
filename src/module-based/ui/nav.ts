@@ -1,11 +1,11 @@
+import { PracticeAutomationLogin } from "../credentials/practice-automation-credentials";
+
 export const Nav = {
-    showpadLogin: (proxy?: string) => {
-        return proxy ? `login` : 'login';
-    },
-    showpadAdminApp: (proxy?: string) => {
-        return proxy ? `admin2/home` : 'admin2/home';
-    },
-    showpadWebApp: (proxy?: string) => {
-        return proxy ? `webapp2/home` : 'webapp2/home';
-    },
+  practiceAutomationLogin: (proxy?: string) => {
+    return proxy ? `practice-test-login` : "practice-test-login";
+  },
+
+  practiceAutomationApp: (proxy?: string) => {
+    return proxy ? `logged-in-successfully/` : "logged-in-successfully/";
+  },
 };

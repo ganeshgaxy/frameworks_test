@@ -4,7 +4,7 @@
  * in the testing environment.
  */
 
-import crypto from 'crypto';
+import crypto from "crypto";
 
 /**
  * Decrypts an encrypted string using AES-256-CBC encryption.
@@ -15,15 +15,15 @@ import crypto from 'crypto';
  * @throws Error if SP_QA_CIPHER_KEY environment variable is not set
  */
 export const decrypt = (encrypted: string) => {
-    if (!process.env.SP_QA_CIPHER_KEY) {
-        throw new Error('SP_QA_CIPHER_KEY is not set');
-    }
-    const key = crypto.scryptSync(process.env.SP_QA_CIPHER_KEY, 'salt', 32);
-    const iv = Buffer.alloc(16, 0);
-    const decipher = crypto.createDecipheriv('aes-256-cbc', key, iv);
-    let decrypted = decipher.update(encrypted, 'hex', 'utf8');
-    decrypted += decipher.final('utf8');
-    return decrypted;
+  if (!process.env.CRYPTO_KEY) {
+    throw new Error("CRYPTO_KEY is not set");
+  }
+  const key = crypto.scryptSync(process.env.CRYPTO_KEY, "salt", 32);
+  const iv = Buffer.alloc(16, 0);
+  const decipher = crypto.createDecipheriv("aes-256-cbc", key, iv);
+  let decrypted = decipher.update(encrypted, "hex", "utf8");
+  decrypted += decipher.final("utf8");
+  return decrypted;
 };
 
 /**
@@ -36,10 +36,10 @@ export const decrypt = (encrypted: string) => {
  * @throws Error if E2E_OAUTH_TOKEN_PREFIX environment variable is not set
  */
 export const createApiToken = (org: string): string => {
-    const e2eOauthTokenPrefix = process.env.E2E_OAUTH_TOKEN_PREFIX;
-    if (!e2eOauthTokenPrefix || e2eOauthTokenPrefix.length < 1) {
-        throw new Error(`E2E_OAUTH_TOKEN_PREFIX environment variable was not set.`);
-    }
+  const e2eOauthTokenPrefix = process.env.E2E_OAUTH_TOKEN_PREFIX;
+  if (!e2eOauthTokenPrefix || e2eOauthTokenPrefix.length < 1) {
+    throw new Error(`E2E_OAUTH_TOKEN_PREFIX environment variable was not set.`);
+  }
 
-    return `${e2eOauthTokenPrefix}-org-${org}`;
+  return `${e2eOauthTokenPrefix}-org-${org}`;
 };

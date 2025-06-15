@@ -4,14 +4,14 @@
  * including cleanup operations for test resources.
  */
 
-import { Expect } from '@playwright/test';
+import { Expect } from "@playwright/test";
 
-import { APIRequestContext } from '@playwright/test';
+import { APIRequestContext } from "@playwright/test";
 
-import { Page } from '@playwright/test';
-import { ApiContextType, PageContextType } from './type';
-import { OrgType } from '../ui/org';
-import { createApiToken } from '../../screenplay/core/cipher';
+import { Page } from "@playwright/test";
+import { ApiContextType, PageContextType } from "./type";
+import { OrgType } from "../ui/org";
+import { createApiToken } from "../../screenplay/core/cipher";
 
 /**
  * Creates a new page context with the provided configuration.
@@ -24,16 +24,21 @@ import { createApiToken } from '../../screenplay/core/cipher';
  * @param proxy - Optional proxy configuration
  * @returns A configured PageContextType object
  */
-const PageContext = (page: Page, expect: Expect, org: OrgType, proxy?: string) =>
-    ({
-        page,
-        expect,
-        org,
-        proxy,
-        buildUrl: (path: string) => `https://${org.value}.showpad.biz/${path}`,
-        token: createApiToken(org.value),
-        cleanUpCallbacks: [] as (() => Promise<void>)[],
-    }) as PageContextType;
+const PageContext = (
+  page: Page,
+  expect: Expect,
+  org: OrgType,
+  proxy?: string
+) =>
+  ({
+    page,
+    expect,
+    org,
+    proxy,
+    buildUrl: (path: string) => `https://${org.value}/${path}`,
+    token: createApiToken(org.value),
+    cleanUpCallbacks: [] as (() => Promise<void>)[],
+  } as PageContextType);
 
 /**
  * Creates a new API context with the provided configuration.
@@ -45,14 +50,14 @@ const PageContext = (page: Page, expect: Expect, org: OrgType, proxy?: string) =
  * @returns A configured ApiContextType object
  */
 const ApiContext = (request: APIRequestContext, expect: Expect, org: OrgType) =>
-    ({
-        request,
-        expect,
-        org,
-        buildUrl: (path: string) => `https://${org.value}.showpad.biz/${path}`,
-        token: createApiToken(org.value),
-        cleanUpCallbacks: [] as (() => Promise<void>)[],
-    }) as ApiContextType;
+  ({
+    request,
+    expect,
+    org,
+    buildUrl: (path: string) => `https://${org.value}/${path}`,
+    token: createApiToken(org.value),
+    cleanUpCallbacks: [] as (() => Promise<void>)[],
+  } as ApiContextType);
 
 /**
  * Executes all cleanup callbacks registered in the page context.
@@ -62,13 +67,15 @@ const ApiContext = (request: APIRequestContext, expect: Expect, org: OrgType) =>
  * @returns Promise that resolves when all cleanup operations are complete
  */
 export const cleanup = async (cleanUpCallbacks: (() => Promise<void>)[]) => {
-    await Promise.all([
-        ...cleanUpCallbacks.map(async (cleanUpCallback) => {
-            return cleanUpCallback.call(this).finally(() => {
-                cleanUpCallbacks = cleanUpCallbacks.filter((fn) => fn !== cleanUpCallback);
-            });
-        }),
-    ]);
+  await Promise.all([
+    ...cleanUpCallbacks.map(async (cleanUpCallback) => {
+      return cleanUpCallback.call(this).finally(() => {
+        cleanUpCallbacks = cleanUpCallbacks.filter(
+          (fn) => fn !== cleanUpCallback
+        );
+      });
+    }),
+  ]);
 };
 
 export { PageContext, ApiContext };

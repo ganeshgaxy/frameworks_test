@@ -1,5 +1,8 @@
-import { CoachingQALegacy } from './coaching-qa-legacy';
+import { PracticeAutomationLogin } from "./practice-automation-credentials";
 
-export const Credentials = { coachQaLegacy: CoachingQALegacy } as const;
+export const Credentials = {
+  practiceAutomationLogin: PracticeAutomationLogin,
+} as const;
 
-export type CredentialsReturnType = (typeof Credentials)[keyof typeof Credentials];
+export type CredentialsReturnType =
+  (typeof Credentials)[keyof typeof Credentials];
