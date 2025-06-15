@@ -1,5 +1,8 @@
-export type OrgType = { type: 'legacy' | 'pnp'; value: string };
+export type OrgType = { type: "legacy" | "pnp"; value: string };
 
 export const Org = {
-    COACHING_QA_LEGACY: { type: 'legacy', value: 'coach-qa-legacy.staging' } as OrgType,
+  SampleCredentials: {
+    type: "legacy",
+    value: "com.com",
+  } as OrgType,
 } as const;

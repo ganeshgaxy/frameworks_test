@@ -1,6 +1,8 @@
-import { Org } from '../user-flows/org';
-import { CoachingQALegacy } from './coaching-qa-legacy';
+import { Org } from "../user-flows/org";
+import { SampleCredentials } from "./sample";
 
-export const Credentials = [{ name: Org.COACHING_QA_LEGACY, value: CoachingQALegacy }] as const;
+export const Credentials = [
+  { name: Org.SampleCredentials, value: SampleCredentials },
+] as const;
 
-export type CredentialsReturnType = (typeof Credentials)[number]['value'];
+export type CredentialsReturnType = (typeof Credentials)[number]["value"];
